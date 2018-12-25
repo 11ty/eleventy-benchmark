@@ -1,6 +1,6 @@
-VERSIONS=("file:../eleventy") #"@11ty/eleventy@0.6.0"
+VERSIONS=("@11ty/eleventy@0.6.0") #"file:../eleventy"
 for npmVersion in "${VERSIONS[@]}"; do
-	# npm install $npmVersion
+	npm install $npmVersion
 
 	rm -rf _site
 	rm -rf liquid/page/
@@ -11,7 +11,7 @@ for npmVersion in "${VERSIONS[@]}"; do
 	eleventyVersion=`npx eleventy --version`
 	nodeVersion=`node --version`
 
-	LANGS=("liquid" "njk" "md" "11ty.js")
+	LANGS=("liquid" "njk" "md") #"11ty.js"
 
 	for templateLang in "${LANGS[@]}"; do
 		echo "---------------------------------------------------------"
@@ -20,7 +20,7 @@ for npmVersion in "${VERSIONS[@]}"; do
 		printf "Creating template files…\r"
 		./make-${templateLang}-files.sh
 		printf "Running…                \r"
-		for ((i=1; i<=6; i++)); do
+		for ((i=1; i<=5; i++)); do
 			eleventyTime=`npx eleventy --quiet --formats=${templateLang}` 
 			echo "$eleventyTime"
 		done

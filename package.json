@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@11ty/eleventy": "file:../eleventy"
+    "@11ty/eleventy": "^0.6.0"
   }
 }
