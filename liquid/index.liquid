@@ -1,0 +1,9 @@
+---
+layout: layout.liquid
+---
+<h1>Liquid Collection List</h1>
+<ul>
+{%- for page in collections.nameSorted %}
+	<li><a href="{{ page.url }}">{{ page.data.name }}</a></li>
+{%- endfor %}
+</ul>

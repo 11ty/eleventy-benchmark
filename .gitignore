@@ -1,0 +1,6 @@
+njk/page
+liquid/page
+md/page
+11ty.js/page
+node_modules
+_site
