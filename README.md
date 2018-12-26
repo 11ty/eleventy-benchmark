@@ -10,9 +10,7 @@ Can optionally run serially against multiple Eleventy versions, for comparison.
 $ ./bench.sh
 ```
 
-## Instructions
-
-### Add additional template type
+### Steps to add additional template type
 
 1. See `make-liquid-files.sh` as a template script to generate a bunch of sample files for a template type.
 2. Add the template language key to `bench.sh`
