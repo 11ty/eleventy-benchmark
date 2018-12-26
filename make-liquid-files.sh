@@ -1,5 +1,5 @@
 mkdir -p liquid/page/
-for ((i=1; i<=1000; i++)); do
+for ((i=1; i<=$1; i++)); do
 	page="liquid/page/$i.liquid"
 
 	touch $page

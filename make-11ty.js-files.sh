@@ -1,5 +1,5 @@
 mkdir -p 11ty.js/page/
-for ((i=1; i<=1000; i++)); do
+for ((i=1; i<=$1; i++)); do
 	page="11ty.js/page/$i.11ty.js"
 
 	touch $page

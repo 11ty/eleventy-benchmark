@@ -1,5 +1,5 @@
 mkdir -p md/page/
-for ((i=1; i<=1000; i++)); do
+for ((i=1; i<=$1; i++)); do
 	page="md/page/$i.md"
 
 	touch $page

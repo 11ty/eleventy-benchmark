@@ -1,5 +1,9 @@
 # Eleventy Benchmark Speed Regression Test
 
+Creates 1000 Liquid, 1000 Nunjucks, and 1000 Markdown templates. Runs Eleventy against each template format individually and measures the Median Eleventy Runtime (over 10 runs) and Median Eleventy Per Template time.
+
+Can optionally run serially against multiple Eleventy versions, for comparison.
+
 ## Usage
 
 ```sh
@@ -19,40 +23,20 @@ $ ./bench.sh
 ## Sample Output
 
 ```
+~/Code/eleventy-bench ᐅ ./bench.sh
 ---------------------------------------------------------
-.liquid for Eleventy 0.7.0 using Node v10.14.2
+.liquid for Eleventy 0.6.0 using Node v10.14.2
+.......... 10 runs, 1000 templates each.
+* Median: 2.075 seconds
+* Median per template: 2 ms
 ---------------------------------------------------------
-Processed 1001 files in 4.83 seconds (4.8ms each)
-Processed 1001 files in 2.23 seconds (2.2ms each)
-Processed 1001 files in 1.79 seconds (1.8ms each)
-Processed 1001 files in 1.55 seconds (1.5ms each)
-Processed 1001 files in 1.95 seconds (1.9ms each)
-Processed 1001 files in 1.99 seconds (2.0ms each)
+.njk for Eleventy 0.6.0 using Node v10.14.2
+.......... 10 runs, 1000 templates each.
+* Median: 3.39 seconds
+* Median per template: 3 ms
 ---------------------------------------------------------
-.njk for Eleventy 0.7.0 using Node v10.14.2
----------------------------------------------------------
-Processed 1001 files in 4.63 seconds (4.6ms each)
-Processed 1001 files in 3.04 seconds (3.0ms each)
-Processed 1001 files in 2.93 seconds (2.9ms each)
-Processed 1001 files in 4.01 seconds (4.0ms each)
-Processed 1001 files in 3.08 seconds (3.1ms each)
-Processed 1001 files in 2.94 seconds (2.9ms each)
----------------------------------------------------------
-.md for Eleventy 0.7.0 using Node v10.14.2
----------------------------------------------------------
-Processed 1001 files in 4.23 seconds (4.2ms each)
-Processed 1001 files in 2.51 seconds (2.5ms each)
-Processed 1001 files in 2.51 seconds (2.5ms each)
-Processed 1001 files in 2.80 seconds (2.8ms each)
-Processed 1001 files in 3.01 seconds (3.0ms each)
-Processed 1001 files in 2.48 seconds (2.5ms each)
----------------------------------------------------------
-.11ty.js for Eleventy 0.7.0 using Node v10.14.2
----------------------------------------------------------
-Processed 1001 files in 2.52 seconds (2.5ms each)
-Processed 1001 files in 1.86 seconds (1.9ms each)
-Processed 1001 files in 1.58 seconds (1.6ms each)
-Processed 1001 files in 1.94 seconds (1.9ms each)
-Processed 1001 files in 1.75 seconds (1.7ms each)
-Processed 1001 files in 1.74 seconds (1.7ms each)
+.md for Eleventy 0.6.0 using Node v10.14.2
+.......... 10 runs, 1000 templates each.
+* Median: 3.9 seconds
+* Median per template: 3 ms
 ```

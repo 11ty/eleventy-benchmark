@@ -1,5 +1,5 @@
 mkdir -p njk/page/
-for ((i=1; i<=1000; i++)); do
+for ((i=1; i<=$1; i++)); do
 	page="njk/page/$i.njk"
 
 	touch $page
