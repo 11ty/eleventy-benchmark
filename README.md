@@ -4,6 +4,15 @@ Creates 1000 (Liquid|Nunjucks|Markdown) templates. Runs Eleventy against each te
 
 Can optionally run serially against multiple Eleventy versions, for comparison.
 
+Eleventy features:
+* Each individual template uses:
+    - A layout file (of the same template type).
+    - A tag to make it part of a collection
+    - Front matter data uses in the template content body
+    - Markdown files are preprocessed by Liquid (as is Eleventy default)
+    - Templates are not tiny—they use content and the output HTML is about 10KB.
+* Template types have one index page template that lists all the templates in a custom sorted collection based on a front matter value.
+
 ## Usage
 
 ```sh
