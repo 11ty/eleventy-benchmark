@@ -1,39 +1,77 @@
 TEMPLATE_FILES=1000
-# VERSIONS=("@11ty/eleventy@0.6.0" "file:../eleventy")
-VERSIONS=("@11ty/eleventy@0.6.0")
+RUNS=10
+
+ # Also use a local version like "file:../eleventy"
+VERSIONS=("@11ty/eleventy@0.5.4" "@11ty/eleventy@0.6.0")
+
+# LANGS=("liquid" "njk" "md" "11ty.js")
+LANGS=("liquid" "njk" "md")
+
+
+LINESEP="---------------------------------------------------------"
+nodeVersion=`node --version`
+echo "$LINESEP"
+echo "Eleventy Benchmark (Node $nodeVersion, $TEMPLATE_FILES templates each)"
+
+BASELINEMEDIAN=()
+BASELINEPERTEMPLATE=()
+RESULTS=()
 for npmVersion in "${VERSIONS[@]}"; do
-	npm install $npmVersion
+	echo "$LINESEP"
+	printf "Running npm install $npmVersion\r"
+	npm install $npmVersion > /dev/null 2>&1
 
 	rm -rf _site
 
 	eleventyVersion=`npx eleventy --version`
-	nodeVersion=`node --version`
+	echo "Eleventy $eleventyVersion                                        "
+	echo "$LINESEP"
 
-	# LANGS=("liquid" "njk" "md" "11ty.js")
-	LANGS=("liquid" "njk" "md")
+	for (( i=0; i<${#LANGS[@]}; i++ )); do
+		if [[ ${#RESULTS[@]} < $i+1 ]]; then
+			RESULTS+=("")
+		fi
 
-	for templateLang in "${LANGS[@]}"; do
-		rm -rf ${templateLang}/page/
-		echo "---------------------------------------------------------"
-		echo ".${templateLang} for Eleventy $eleventyVersion using Node $nodeVersion"
+		rm -rf "${LANGS[$i]}/page/"
 		printf "Creating template files…\r"
-		./make-${templateLang}-files.sh $TEMPLATE_FILES
-		printf "Running…                \r"
+		./make-${LANGS[$i]}-files.sh $TEMPLATE_FILES
+		printf "                        \r"
+		printf ".${LANGS[$i]}: "
 
 		TIMES=""
-		RUNS=10
-		for ((i=1; i<=$RUNS; i++)); do
-			eleventyTime=`npx eleventy --quiet --formats=${templateLang}`
+		for ((j=1; j<=$RUNS; j++)); do
+			eleventyTime=`npx eleventy --quiet --formats=${LANGS[$i]}`
 			printf "."
 
+			# Extract the total time
+			# Expected Format: Copied 1 item and Processed 0 files in 0.14 seconds
 			eleventyTimeNumber=`echo $eleventyTime | awk '/a/ {print $5}'`
 			TIMES="$TIMES$eleventyTimeNumber\n"
 		done
-		printf " $RUNS runs, $TEMPLATE_FILES templates each.\n"
+
+		printf " $RUNS runs.\n"
+
 		median=`printf $TIMES | datamash median 1`
-		mean=`printf $TIMES | datamash mean 1`
 		perTemplate=`echo "$median * 1000 / $TEMPLATE_FILES" | bc`
-		echo "* Median: $median seconds
-* Median per template: $perTemplate ms"
+
+		printf "* Median: $median seconds"
+		if [[ ${#BASELINEMEDIAN[@]} < $i+1 ]]; then
+			BASELINEMEDIAN+=($median)
+			echo ""
+		else
+			baselineCompare=`echo "$median * 100 / ${BASELINEMEDIAN[$i]} - 100" | bc`
+			echo " (${baselineCompare}%)"
+		fi
+
+		printf "* Median per template: $perTemplate ms"
+		if [[ ${#BASELINEPERTEMPLATE[@]} < $i+1 ]]; then
+			BASELINEPERTEMPLATE+=($perTemplate)
+			echo ""
+		else
+			baselinePerTemplateCompare=`echo "$perTemplate * 100 / ${BASELINEPERTEMPLATE[$i]} - 100" | bc`
+			echo " (${baselinePerTemplateCompare}%)"
+		fi
+		echo ""
 	done
 done
+
