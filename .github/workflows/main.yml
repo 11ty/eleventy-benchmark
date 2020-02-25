@@ -1,13 +1,20 @@
-name: CI
+name: Main
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, reopened, synchronize]
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [0.5.4, 0.6.0]
 
     steps:
-
-    - name: Run a one-line script
-      run: echo Hello, world!
+    - uses: actions/checkout@v2
+    - run: ./bench.sh ${{ matrix.version }}
