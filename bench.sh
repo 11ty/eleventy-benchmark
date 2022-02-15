@@ -1,8 +1,10 @@
-TEMPLATE_FILES=1000
-RUNS=10
+TEMPLATE_FILES=5000
+RUNS=3
 
  # Also use a local version like "file:../eleventy"
-VERSIONS=("@11ty/eleventy@0.5.4" "@11ty/eleventy@0.6.0")
+#VERSIONS=("@11ty/eleventy@canary")
+#VERSIONS=("file:../eleventy")
+VERSIONS=("@11ty/eleventy@0.12.1" "@11ty/eleventy@1.0.0")
 
 # LANGS=("liquid" "njk" "md" "11ty.js")
 LANGS=("liquid" "njk" "md")
@@ -44,13 +46,23 @@ for npmVersion in "${VERSIONS[@]}"; do
 			printf "."
 
 			# Extract the total time
-			# Expected Format: Copied 1 item and Processed 0 files in 0.14 seconds
-			eleventyTimeNumber=`echo $eleventyTime | awk '/a/ {print $5}'`
+			# Expected Format 0.x (print $5):
+			# Copied 1 item and Processed 0 files in 0.14 seconds
+			# Expected Format 1.0 (print $6):
+			# [11ty] Wrote 114 files in 6.13 seconds (53.8ms each, v1.0.0-canary.45)
+			# [11ty] Copied 4196 files / Wrote 114 files in 6.13 seconds (53.8ms each, v1.0.0-canary.45)
+			# TODO fix this to be automatic
+
+			if [[ $npmVersion == "@11ty/eleventy@0.12.1" ]]; then
+				eleventyTimeNumber=`echo $eleventyTime | awk '/a/ {print $5}'`
+			else
+				eleventyTimeNumber=`echo $eleventyTime | awk '/a/ {print $6}'`
+			fi
+
 			TIMES="$TIMES$eleventyTimeNumber\n"
 		done
 
 		printf " $RUNS runs.\n"
-
 		median=`printf $TIMES | datamash median 1`
 		perTemplate=`echo "$median * 1000 / $TEMPLATE_FILES" | bc`
 
