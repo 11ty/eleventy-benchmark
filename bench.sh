@@ -6,8 +6,13 @@ RUNS=3
 #VERSIONS=("file:../eleventy")
 VERSIONS=("@11ty/eleventy@0.12.1" "@11ty/eleventy@1.0.0")
 
-# LANGS=("liquid" "njk" "md" "11ty.js")
-LANGS=("liquid" "njk" "md")
+ALL_LANGS=("liquid" "njk" "md" "11ty.js")
+LANGS=("njk")
+
+for (( i=0; i<${#ALL_LANGS[@]}; i++ )); do
+	echo "* Deleting previous ${ALL_LANGS[$i]} template files."
+	rm -rf "${ALL_LANGS[$i]}/page/"
+done
 
 
 LINESEP="---------------------------------------------------------"
@@ -34,7 +39,6 @@ for npmVersion in "${VERSIONS[@]}"; do
 			RESULTS+=("")
 		fi
 
-		rm -rf "${LANGS[$i]}/page/"
 		printf "Creating template files…\r"
 		./make-${LANGS[$i]}-files.sh $TEMPLATE_FILES
 		printf "                        \r"
@@ -64,7 +68,7 @@ for npmVersion in "${VERSIONS[@]}"; do
 
 		printf " $RUNS runs.\n"
 		median=`printf $TIMES | datamash median 1`
-		perTemplate=`echo "$median * 1000 / $TEMPLATE_FILES" | bc`
+		perTemplate=`echo "$median * 1000000 / $TEMPLATE_FILES" | bc`
 
 		printf "* Median: $median seconds"
 		if [[ ${#BASELINEMEDIAN[@]} < $i+1 ]]; then
@@ -75,7 +79,7 @@ for npmVersion in "${VERSIONS[@]}"; do
 			echo " (${baselineCompare}%)"
 		fi
 
-		printf "* Median per template: $perTemplate ms"
+		printf "* Median per template: $perTemplate ns"
 		if [[ ${#BASELINEPERTEMPLATE[@]} < $i+1 ]]; then
 			BASELINEPERTEMPLATE+=($perTemplate)
 			echo ""
