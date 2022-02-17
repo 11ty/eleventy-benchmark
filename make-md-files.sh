@@ -13,3 +13,5 @@ tags: name
 # {{ name }}
 $content" > $page
 done
+
+cp src/page.11tydata.json md/page/

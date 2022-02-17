@@ -13,3 +13,5 @@ tags: name
 <h1>{{ name }}</h1>
 $content" > $page
 done
+
+cp src/page.11tydata.json liquid/page/

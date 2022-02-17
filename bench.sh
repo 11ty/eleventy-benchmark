@@ -1,10 +1,12 @@
 TEMPLATE_FILES=5000
 RUNS=3
 
- # Also use a local version like "file:../eleventy"
-#VERSIONS=("@11ty/eleventy@canary")
-#VERSIONS=("file:../eleventy")
-VERSIONS=("@11ty/eleventy@0.12.1" "@11ty/eleventy@1.0.0")
+# "@11ty/eleventy@canary"
+# "@11ty/eleventy@beta"
+# "@11ty/eleventy@0.12.1"
+# "@11ty/eleventy@1.0.0"
+# "file:../eleventy"
+VERSIONS=("@11ty/eleventy@0.12.1" "@11ty/eleventy@1.0.0" "file:../eleventy")
 
 ALL_LANGS=("liquid" "njk" "md" "11ty.js")
 LANGS=("njk")
@@ -66,7 +68,7 @@ for npmVersion in "${VERSIONS[@]}"; do
 			TIMES="$TIMES$eleventyTimeNumber\n"
 		done
 
-		printf " $RUNS runs.\n"
+		printf " $RUNS runs:\n"
 		median=`printf $TIMES | datamash median 1`
 		perTemplate=`echo "$median * 1000000 / $TEMPLATE_FILES" | bc`
 
@@ -79,7 +81,7 @@ for npmVersion in "${VERSIONS[@]}"; do
 			echo " (${baselineCompare}%)"
 		fi
 
-		printf "* Median per template: $perTemplate ns"
+		printf "* Median per template: $perTemplate µs"
 		if [[ ${#BASELINEPERTEMPLATE[@]} < $i+1 ]]; then
 			BASELINEPERTEMPLATE+=($perTemplate)
 			echo ""

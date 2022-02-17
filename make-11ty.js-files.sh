@@ -22,3 +22,5 @@ $content\`;
 
 module.exports = MyTemplate;" > $page
 done
+
+cp src/page.11tydata.json 11ty.js/page/
