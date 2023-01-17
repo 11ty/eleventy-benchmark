@@ -11,6 +11,7 @@ layout: layout.njk
 tags: name
 ---
 <h1>{{ name }}</h1>
+<h2>$i</h2>
 $content" > $page
 done
 

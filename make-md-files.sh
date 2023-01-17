@@ -11,6 +11,7 @@ layout: layout.liquid
 tags: name
 ---
 # {{ name }}
+## $i
 $content" > $page
 done
 

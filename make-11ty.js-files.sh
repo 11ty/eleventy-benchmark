@@ -16,6 +16,7 @@ for ((i=1; i<=$1; i++)); do
 
 	render(data) {
     return \`<h1>\${data.name}</h1>
+<h2>$i</h2>
 $content\`;
   }
 }
