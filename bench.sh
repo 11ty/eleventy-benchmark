@@ -9,13 +9,7 @@ RUNS=3
 VERSIONS=("@11ty/eleventy@0.12.1" "@11ty/eleventy@1.0.0" "file:../eleventy")
 
 ALL_LANGS=("liquid" "njk" "md" "11ty.js")
-LANGS=("njk")
-
-for (( i=0; i<${#ALL_LANGS[@]}; i++ )); do
-	echo "* Deleting previous ${ALL_LANGS[$i]} template files."
-	rm -rf "${ALL_LANGS[$i]}/page/"
-done
-
+LANGS=("liquid" "njk" "11ty.js" "md")
 
 LINESEP="---------------------------------------------------------"
 nodeVersion=`node --version`
@@ -37,13 +31,18 @@ for npmVersion in "${VERSIONS[@]}"; do
 	echo "$LINESEP"
 
 	for (( i=0; i<${#LANGS[@]}; i++ )); do
+		# Delete previous template files
+		for (( j=0; j<${#ALL_LANGS[@]}; j++ )); do
+			rm -rf "${ALL_LANGS[$j]}/page/"
+		done
+
 		if [[ ${#RESULTS[@]} < $i+1 ]]; then
 			RESULTS+=("")
 		fi
 
-		printf "Creating template files…\r"
+		printf "Creating fresh template files…\r"
 		./make-${LANGS[$i]}-files.sh $TEMPLATE_FILES
-		printf "                        \r"
+		printf "                              \r"
 		printf ".${LANGS[$i]}: "
 
 		TIMES=""
