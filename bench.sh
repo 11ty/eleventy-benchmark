@@ -59,9 +59,9 @@ for npmVersion in "${VERSIONS[@]}"; do
 			# TODO fix this to be automatic
 
 			if [[ $npmVersion == "@11ty/eleventy@0.12.1" ]]; then
-				eleventyTimeNumber=`echo $eleventyTime | awk '/a/ {print $5}'`
+				eleventyTimeNumber=`echo $eleventyTime | awk '{split($0, array, " "); print array[5]}'`
 			else
-				eleventyTimeNumber=`echo $eleventyTime | awk '/a/ {print $6}'`
+				eleventyTimeNumber=`echo $eleventyTime | awk '{split($0, array, " "); print array[6]}'`
 			fi
 
 			TIMES="$TIMES$eleventyTimeNumber\n"
