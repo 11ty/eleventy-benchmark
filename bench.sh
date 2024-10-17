@@ -47,7 +47,12 @@ for npmVersion in "${VERSIONS[@]}"; do
 
 		TIMES=""
 		for ((j=1; j<=$RUNS; j++)); do
-			eleventyTime=`npx eleventy --quiet --formats=${LANGS[$i]}`
+			# No CPU profile
+			# eleventyTime=`npx eleventy --quiet --formats=${LANGS[$i]}`
+
+			# Includes a CPU profile for speedscope
+			timestamp=`date +%y%m%d-%H%M%S`
+			eleventyTime=`node --cpu-prof --cpu-prof-name=eleventybench-${eleventyVersion}_r${i}_${timestamp}.cpuprofile ./node_modules/.bin/eleventy --quiet --formats=${LANGS[$i]}`
 			printf "."
 
 			# Extract the total time
@@ -56,6 +61,7 @@ for npmVersion in "${VERSIONS[@]}"; do
 			# Expected Format 1.0 (print $6):
 			# [11ty] Wrote 114 files in 6.13 seconds (53.8ms each, v1.0.0-canary.45)
 			# [11ty] Copied 4196 files / Wrote 114 files in 6.13 seconds (53.8ms each, v1.0.0-canary.45)
+			# [11ty] Wrote 1001 files in 1.01 seconds (1.0ms each, v3.0.0)
 			# TODO fix this to be automatic
 
 			if [[ $npmVersion == "@11ty/eleventy@0.12.1" ]]; then

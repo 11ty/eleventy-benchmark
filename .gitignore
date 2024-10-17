@@ -4,3 +4,4 @@ md/page
 11ty.js/page
 node_modules
 _site
+eleventybench-*
