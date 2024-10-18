@@ -21,6 +21,11 @@ $ ./bench.sh
 
 Requires the `datamash` utility (`brew install datamash` on Mac OS using homebrew). Uh, and all the prerequisites for Eleventy.
 
+### Use with Speedscope
+
+This benchmark uses Node’s --cpu-prof arg to create a `.cpuprofile` output that can be uploaded to [speedscope.app](speedscope.app) for further review.
+
+
 ### Sample Output
 
 ```
@@ -57,10 +62,6 @@ Eleventy 0.6.0
 * Median: 2.95 seconds (1%)
 * Median per template: 2 ms (0%)
 ```
-
-### Use with Speedscope
-
-This benchmark uses Node’s --cpu-prof arg to create a `.cpuprofile` output that can be uploaded to [speedscope.app](speedscope.app).
 
 ### Steps to add additional template type
 
