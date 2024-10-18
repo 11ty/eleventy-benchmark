@@ -23,7 +23,7 @@ Requires the `datamash` utility (`brew install datamash` on Mac OS using homebre
 
 ### Use with Speedscope
 
-This benchmark uses Node’s --cpu-prof arg to create a `.cpuprofile` output that can be uploaded to [speedscope.app](speedscope.app) for further review.
+This benchmark uses Node’s --cpu-prof arg to create a `.cpuprofile` output that can be uploaded to [speedscope.app](https://www.speedscope.app/) for further review.
 
 
 ### Sample Output
