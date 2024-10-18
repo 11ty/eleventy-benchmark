@@ -58,6 +58,10 @@ Eleventy 0.6.0
 * Median per template: 2 ms (0%)
 ```
 
+### Use with Speedscope
+
+This benchmark uses Node’s --cpu-prof arg to create a `.cpuprofile` output that can be uploaded to [speedscope.app](speedscope.app).
+
 ### Steps to add additional template type
 
 1. See `make-liquid-files.sh` as a template script to generate a bunch of sample files for a template type.
