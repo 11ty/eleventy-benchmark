@@ -1,5 +1,5 @@
-TEMPLATE_FILES=5000
-RUNS=3
+TEMPLATE_FILES=2500
+RUNS=5
 
 # "@11ty/eleventy@canary"
 # "@11ty/eleventy@beta"
@@ -52,7 +52,7 @@ for npmVersion in "${VERSIONS[@]}"; do
 
 			# Includes a CPU profile for speedscope
 			timestamp=`date +%y%m%d-%H%M%S`
-			eleventyTime=`node --cpu-prof --cpu-prof-name=eleventybench-${eleventyVersion}_r${i}_${timestamp}.cpuprofile ./node_modules/.bin/eleventy --quiet --formats=${LANGS[$i]}`
+			eleventyTime=`node --cpu-prof --cpu-prof-name=eleventybench-${eleventyVersion}_${LANGS[$i]}_r${j}_${timestamp}.cpuprofile ./node_modules/.bin/eleventy --quiet --formats=${LANGS[$i]}`
 			printf "."
 
 			# Extract the total time
